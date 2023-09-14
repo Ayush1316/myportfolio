@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="valdation.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="style1.css">
+    <section id="registration-page">
+        <form class="signup-form">
+            <!-- FORM HEADER -->
+            <div class="form-header">
+                <h1>Create Account</h1>
+            </div>
+            <!-- FORM BODY -->
+            <div class="form-body">
+                <!-- First name & Last name -->
+                <div class="row">
+                    <div class="input-group">
+                        <label>First name </label>
+                        <input type="text" placholder="Enter your first name" id="t1">
+                    </div>
+                    <div class="input-group">
+                        <label>Last name</label>
+                        <input type="text" placholder="Enter your last name" id="t2">
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="row">
+                    <div class="input-group">
+                        <label>Email </label>
+                        <input type="email" placholder="Enter your email address" id="e1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label>Password </label>
+                        <input type="password" placholder="Enter your your password" id="p1">
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" placholder="Enter your password again" id="p2">
+                    </div>
+                </div>
+                <!-- Gender & Hobbies -->
+                <div class="row">
+                    <div class="input-group">
+                        <label>Gender </label>
+
+                        <div class="radio-group">
+
+                            <div>
+                                <label for="male">
+                                    <input type="radio" name="gender" id="male">
+                                    Male
+                                </label>
+                                <label id="text1"></label>
+                            </div>
+
+                            <div>
+                                <label for="female">
+                                    <input type="radio" name="gender" id="female">
+                                    Female
+                                </label>
+                            </div>
+
+                            <div>
+                                <label for="other">
+                                    <input type="radio" name="gender" id="other"> Other
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Hobbies</label>
+                        <div class="checkbox-group">
+                            <div>
+                                <label for="music">
+                                    <input type="checkbox" name="hobbies" id="music">
+                                    Music
+                                </label>
+                            </div>
+
+                            <div>
+                                <label for="cooking">
+                                    <input type="checkbox" name="cooking" id="cooking">
+                                    Cook
+                                </label>
+                            </div>
+
+                            <div>
+                                <label for="travel">
+                                    <input type="checkbox" name="travel" id="travel">
+                                    Travel
+                                </label>
+                            </div>
+
+                            <div>
+                                <label for="movies">
+                                    <input type="checkbox" name="movies" id="movies">
+                                    Movie
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Source of Income & Income -->
+                <div class="row">
+                    <div class="input-group">
+                        <label for="">Source of Income</label>
+                        <select name="" id="">
+                            <option>Employed</option>
+                            <option>Self-Employed</option>
+                            <option>Unemployed</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Income</label>
+                        <div class="range-group">
+                            <input type="range" onChange="changeSliderValue(this.value)" min="25" max="200" step="5"
+                                value="20">
+                            <label id="rangeSliderLabel">20 K</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Upload Profile Picure & Age -->
+                <div class="row">
+                    <div class="input-group">
+                        <label>Upload Profile Picture</label>
+                        <input type="file">
+                    </div>
+                    <div class="input-group">
+                        <label>Age</label>
+                        <input type="date" id="d1">
+                        <label id="age1"></label>
+                    </div>
+                    <div class="input-group">
+                        <label>date of registration</label>
+                        <input type="date" id="d2">
+                    </div>
+                </div>
+
+                <!--  Bio   -->
+                <div class="row">
+                    <div class="input-group">
+                        <label for="">Bio</label>
+                        <textarea> </textarea>
+                    </div>
+                </div>
+            </div>
+            <!--  FORM FOOTER   -->
+            <div class="form-footer">
+                <button type="button" class="btn">Create</button>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        const changeSliderValue = (value) => {
+            document.getElementById("rangeSliderLabel").innerText = value + " K";
+        }
+    </script>
+
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+   /* function cc(){
+        if(checkage()==true){
+            $("$age1").html("date is right");
+
+        }
+        else(checkage()==false)
+            $("$age1").html("date is false"); 
+        }
+    }*/
+       $("#d1").on('input',function(){
+       ans= checkage($("#d1").val());
+       if(ans==false)
+       {
+        $("#age1").html("date is wrong");
+
+        return false;
+            
+       }
+    else(ans==true)
+        {
+            $("#age1").html("date is right");
+            $("age1").val()="";
+            
+        }
+       });
+       
+    })
+    $("#t1").click(function(){
+        ans=checkname($("#t1").val());
+        if(ans==false){
+            $("#text1").html("enter the name");
+        }
+        else(ans==true)
+        {
+            $("#text1").html("pls proceed");
+        }
+    });
+</script>

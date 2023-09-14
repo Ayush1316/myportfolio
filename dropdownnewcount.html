@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="container mt-3">
+                <h2>drop down for country, state, and city</h2>
+                  <label for="sel1" class="form-label">select country</label>
+                  <select class="form-select" id="country" name="sellist1">
+                    <option value="">Country</option>
+                  </select>
+                  <label for="sel1" class="form-label">select state</label>
+                  <select class="form-select" id="state" name="sellist2">
+                    <option value="">state</option>
+                  </select>
+                  <label for="sel1" class="form-label">select city</label>
+                  <select class="form-select" id="city" name="sellist3">
+                    <option value="">city</option>
+                  </select>
+            </div>
+            <div id="photos"></div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+  
+
+</body>
+<script>
+    let auth_token;
+    $(document).ready(function(){
+        $.ajax({
+            type:'get',
+            url:'https://www.universal-tutorial.com/api/getaccesstoken',
+            success:function(data){
+                auth_token = data.auth_token;
+                getCountry(data.auth_token);
+            },
+            error:function(error){
+                console.log(error);
+            },
+            headers:{
+                "Accept":"application/json",
+                "api-token":"fYEzM01DrzsJuLKmj6Z4kqI_IcPKfKxuB1lX6Epvm-xHkGFmaeLHoLEPwdiEPq5wBlw",
+                "user-email":"gadhaveayush338@gmail.com"
+            }
+        })
+
+        $('#country').change(function(){
+            getState();
+        })
+
+        $('#state').change(function(){
+            getCity();
+        })
+    })
+
+    function getCountry(auth_token){
+        $.ajax({
+            type:'get',
+            url: 'https://www.universal-tutorial.com/api/countries/',
+            success:function(data){
+                data.forEach(element => {
+                    $('#country').append('<option value="'+element.country_name+'">'+element.country_name+'</option>');
+                });
+            },
+            error:function(error){
+                console.log(error);
+            },
+            headers:{
+                "Authorization": "Bearer " + auth_token,
+                "Accept": "application/json"
+            }
+        })
+    }
+
+    function getState(){
+        let country_name = $('#country').val();
+        $.ajax({
+            type:'get',
+            url: 'https://www.universal-tutorial.com/api/states/' + country_name,
+            success:function(data){
+                $('#state').empty();
+                data.forEach(element => {
+                    $('#state').append('<option value="'+element.state_name+'">'+element.state_name+'</option>');
+                });
+                getCity();
+            },
+            error:function(error){
+                console.log(error);
+            },
+            headers:{
+                "Authorization": "Bearer " + auth_token,
+                "Accept": "application/json"
+            }
+        })
+    }
+
+    function getCity(){
+        let state_name = $('#state').val();
+        $.ajax({
+            type:'get',
+            url:'https://www.universal-tutorial.com/api/cities/' + state_name,
+            success:function(data){
+                $('#city').empty();
+                data.forEach(element => {
+                    $('#city').append('<option value="'+element.city_name+'">'+element.city_name+'</option>');
+                });
+            },
+            error:function(error){
+                console.log(error);
+            },
+            headers:{
+                "Authorization": "Bearer " + auth_token,
+                "Accept": "application/json"
+            }
+        })
+    }
+</script>
+</html>
+
+</body>
+</html>

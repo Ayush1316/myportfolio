@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"> </script>
+    <script>   
+    function practice()
+        {
+            var name=document.getElementById("text").value;
+            alert("You have selected " +name);
+        }
+        function practice1()
+        {
+            var name=document.getElementById("text1").value;
+            alert("You have selected " +name);
+        }
+        function practice2()
+        {
+            var name=document.getElementById("text2").value;
+            alert("You have selected " +name);
+        }
+    </script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container px-4">
+            <a  class="navbar-brand">Air</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsupportedcontend">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse me-4 pe-4">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        
+    </nav>
+    <section class="see text-center text-white my-5">
+        <h3>Services</h3>
+        <p>service which we cost</p>
+    </section>
+    <section class="pricing my-5 text-center">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-4" >
+                    <div class="card " >
+                        <center>
+                            <img src="" alt="">
+                            <div class="card-title">
+                                prime
+                            </div>
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <ul class="list-group text-center p-2">
+                                        <li class="list-group-item list-group-item-action">daily,mon-fri 15rs/km</li>
+                                        <li class="list-group-item list-group-item-action">monthly,mon-fri 13rs/km</li>
+                                        <li class="list-group-item list-group-item-action">Yearly,mon-fri 12rs/km</li>
+                                        </ul>
+                                </div>
+                                <select name="" id="text">
+                                    <option value="Prime Daily"> Prime Daily</option>
+                                    <option value="Prime Monthly"> Prime Monthly</option>
+                                    <option value=" Prime Yearly"> Prime Yearly</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-danger" value="submit button" onclick="practice()">Submit</button>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <center>
+                            <img src="" alt="">
+                            <div class="card-title">
+                                Sedan
+                            </div>
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <ul class="list-group text-center p-2">
+                                        <li class="list-group-item list-group-item-action">daily,mon-fri 15rs/km</li>
+                                        <li class="list-group-item list-group-item-action">monthly,mon-fri 13rs/km</li>
+                                        <li class="list-group-item list-group-item-action">Yearly,mon-fri 12rs/km</li>
+                                        </ul>
+                                </div>
+                                <select name="" id="text1">
+                                    <option value="Sedan Daily"> Sedan Daily</option>
+                                    <option value="Sedan Monthly"> Sedan Monthly</option>
+                                    <option value="Sedan Yearly"> Sedan Yearly</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-danger" value="submit button" onclick="practice1()">Submit</button>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" >
+                        <center>
+                            <img src="" alt="">
+                            <div class="card-title">
+                                Xuv
+                            </div>
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <ul class="list-group text-center p-2">
+                                        <li class="list-group-item list-group-item-action">daily,mon-fri 15rs/km</li>
+                                        <li class="list-group-item list-group-item-action">monthly,mon-fri 13rs/km</li>
+                                        <li class="list-group-item list-group-item-action">Yearly,mon-fri 12rs/km</li>
+                                        </ul>
+                                </div>
+                                <select name="" id="text2">
+                                    <option value="XUV Daily"> XUV Daily</option>
+                                    <option value="XUV Monthly"> XUV Monthly</option>
+                                    <option value=" XUV Yearly"> XUV Yearly</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-danger" value="submit button" onclick="practice2()">Submit</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
