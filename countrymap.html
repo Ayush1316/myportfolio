@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <style>
+        #loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+    
+        #loader img {
+            height: 30px;
+            width: 30px;
+        }
+    
+        body {
+            background-image: url(images/WhatsApp\ Image\ 2023-09-14\ at\ 16.06.36.jpg);
+            background-size: cover;
+           
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-md-4">
+                <select class="form-select" id="country">
+                    <option value="">Country</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="state">
+                    <option value="">State</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="city">
+                    <option value="">City</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-md-12">
+                <div id="map" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        let auth_token;
+        let map;
+
+        $(document).ready(function(){
+            $.ajax({
+                type: 'get',
+                url: 'https://www.universal-tutorial.com/api/getaccesstoken',
+                success: function(data){
+                    auth_token = data.auth_token;
+                    getCountry(data.auth_token);
+                },
+                error: function(error){
+                    console.log(error);  
+                },
+                headers: {
+                    "Accept": "application/json",
+                    "api-token": "d4lhMyD0WaHHsEFnpPRw9oOwmkZjtbPgWgZH1RL0FXkfDJgASxPwauVWq8hoqIztp48",
+                    "user-email": "shreevighneshkonar@gmail.com"
+                }
+            })
+
+            $('#country').change(function(){
+                getState();
+            })
+
+            $('#state').change(function(){
+                getCity();
+            })
+
+            
+            $("#showCityBtn").click(function () {
+                updateMap();
+            });
+        })
+
+        function getCountry(auth_token){
+            $.ajax({
+                type: 'get',
+                url: 'https://www.universal-tutorial.com/api/countries',
+                success: function(data){
+                    data.forEach(element => {
+                        $('#country').append('<option value="'+element.country_name+'">'+element.country_name+'</option>');
+                    });
+                },
+                error: function(error){
+                    console.log(error);
+                },
+                headers: {
+                    "Authorization": "Bearer "+ auth_token,
+                    "Accept": "application/json"
+                }
+            })
+        }
+
+        function getState(){
+            let country_name = $('#country').val();
+            $.ajax({
+                type: 'get',
+                url: 'https://www.universal-tutorial.com/api/states/'+country_name,
+                success: function(data){
+                    $('#state').empty();
+                    data.forEach(element => {
+                        $('#state').append('<option value="'+element.state_name+'">'+element.state_name+'</option>');
+                    });
+                },
+                error: function(error){
+                    console.log(error);
+                },
+                headers: {
+                    "Authorization": "Bearer "+ auth_token,
+                    "Accept": "application/json"
+                }
+            })
+        }
+
+        function getCity(){
+            let state_name = $('#state').val();
+            $.ajax({
+                type: 'get',
+                url: 'https://www.universal-tutorial.com/api/cities/'+state_name,
+                success: function(data){
+                    $('#city').empty();
+                    data.forEach(element => {
+                        $('#city').append('<option value="'+element.city_name+'">'+element.city_name+'</option>');
+                    });
+                },
+                error: function(error){
+                    console.log(error);
+                },
+                headers: {
+                    "Authorization": "Bearer "+ auth_token,
+                    "Accept": "application/json"
+                }
+            })
+        }
+
+        function updateMap() {
+            let selectedCity = $("#city").val();
+
+            
+            if (!selectedCity) {
+                return;
+            }
+
+            
+            const nominatimUrl = "https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(selectedCity) + "&format=json&limit=1";
+
+            $.getJSON(nominatimUrl, function(data) {
+                if (data && data.length > 0) {
+                    const lat = data[0].lat;
+                    const lon = data[0].lon;
+
+                    
+                    if (map) {
+                        map.remove();
+                    }
+                    map = L.map('map').setView([lat, lon], 12);
+
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+
+                    
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup(selectedCity)
+                        .openPopup();
+                } else {
+                    alert("Unable to get location for the selected city.");
+                }
+            });
+        }
+    </script>
+    <!-- <button id="showCityBtn">Show City on Map</button> -->
+    <br><center><button type="button" class="btn btn-primary  justify-content-center" id="showCityBtn">Show City on Map</button></center>
+
+</body>
+</html>
